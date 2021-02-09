@@ -1,3 +1,6 @@
+import math 
+import numpy as np # for checking our std work
+
 # warm up task
 def get_column(table, header, col_name):
     col_index = header.index(col_name)
@@ -14,15 +17,40 @@ def get_min_max(values):
     # tuple: an immutable list
     return min(values), max(values)
 
+# warm up 
+def get_frequencies(table, header, col_name):
+    col = get_column(table, header, col_name)
+    col.sort() 
+
+    values = []
+    counts = []
+
+    for value in col:
+        if value not in values:
+            # haven't seen this value before
+            values.append(value)
+            counts.append(1)
+        else:
+            # have seen this value before
+            counts[-1] += 1 # ok because col is sorted
+
+    return values, counts 
+
 def main():
     header = ["CarName", "ModelYear", "MSRP"]
     msrp_table = [["ford pinto", 75, 2769],
               ["toyota corolla", 75, 2711],
               ["ford pinto", 76, 3025],
-              ["toyota corolla", 77, 2789]]
+              ["toyota corolla", 77, 2789],
+              ["ford mustang", 77, 3999],
+              ["tesla", 74, 5000]]
     msrps = get_column(msrp_table, header, "MSRP")
     print(msrps)
 
+    # warmup 
+    modelyear_values, modelyear_counts = get_frequencies(msrp_table, header, "ModelYear")
+    print(modelyear_values)
+    print(modelyear_counts)
     # more on attributes
     # 1. what is the type of an attribute?
     # what is the most appropriate way to store the attribute
@@ -72,7 +100,28 @@ def main():
     # mode: is the most frequently occuring value
 
     # data dispersion
-    
+    # variance: measures the spread of the data
+    # low variance, data is close to the mean
+    # average of the squared mean deviations
+    squared_mean_deviations = [(x - msrp_mean) ** 2 for x in msrps] # list comprehension
+    msrp_variance = sum(squared_mean_deviations) / len(squared_mean_deviations)
+    # standard deviation: square root of variance
+    msrp_stdev = math.sqrt(msrp_variance)
+    print("msrp stdev:", msrp_stdev, np.std(msrps))
+
+    # for normally distributed data (bell shaped curve)
+    # empirical rule
+    # 68% of data values are within mean +/- 1 stdev
+    # 95% of data values are within mean +/- 2 stdev
+    # 99.7% of data values are within mean +/- 3 stdev
+
+    # quantiles
+    # are used to partition (sorted) data into roughly
+    # equal sized groups
+    # 2-quantiles: 2 groups; 1 cut off point (median)
+    # quartiles: 4 groups; 3 cut off points
+    # percentiles: 100 groups; 99 cut off points
+    # more on this later
 
 
 if __name__ == "__main__":
