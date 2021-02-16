@@ -36,6 +36,24 @@ def get_frequencies(table, header, col_name):
 
     return values, counts
 
+def group_by(table, header, group_by_col_name):
+    col = get_column(table, header, group_by_col_name)
+    col_index = header.index(group_by_col_name)
+
+    # get a list of unique values for the column
+    group_names = sorted(list(set(col))) # 75, 76, 77
+    group_subtables = [[] for _ in group_names] # [[], [], []]
+
+    # walk through each row and assign it to the appropriate
+    # subtable based on its group by value (model year)
+    for row in table:
+        group_value = row[col_index]
+        # which group_subtable??
+        group_index = group_names.index(group_value)
+        group_subtables[group_index].append(row.copy()) # shallow copy
+
+    return group_names, group_subtables
+
 def dummy_function1():
     pass
 
