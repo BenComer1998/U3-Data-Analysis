@@ -35,5 +35,26 @@ def get_frequencies(table, header, col_name):
 
     return values, counts
 
+def group_by(table, header, group_by_col_name):
+    col = get_column(table, header, group_by_col_name)
+    col_index = header.index(group_by_col_name)
+    
+    # we need the unique values for our group by column
+    group_names = sorted(list(set(col))) # e.g. 74, 75, 76, 77
+    group_subtables = [[] for _ in group_names] # [[], [], [], []]
+    
+    # algorithm: walk through each row and assign it to the appropriate
+    # subtable based on its group_by_col_name value
+    for row in table:
+        group_by_value = row[col_index]
+        # which subtable to put this row in?
+        group_index = group_names.index(group_by_value)
+        group_subtables[group_index].append(row.copy()) # shallow copy
+    
+    return group_names, group_subtables
+
 def dummy_function1():
+    pass
+
+def dummy_function2():
     pass
