@@ -38,3 +38,6 @@ def get_frequencies(table, header, col_name):
 
 def dummy_function1():
     pass
+
+def dummy_function2():
+    pass
