@@ -53,6 +53,22 @@ def group_by(table, header, group_by_col_name):
     
     return group_names, group_subtables
 
+def compute_equal_width_cutoffs(values, num_bins):
+    # first compute the range of the values
+    values_range = max(values) - min(values)
+    bin_width = values_range / num_bins 
+    # bin_width is likely a float
+    # if your application allows for ints, use them
+    # we will use floats
+    # np.arange() is like the built in range() but for floats
+    cutoffs = list(np.arange(min(values), max(values), bin_width)) 
+    cutoffs.append(max(values))
+    # optionally: might want to round
+    cutoffs = [round(cutoff, 2) for cutoff in cutoffs]
+    return cutoffs 
+    
+    
+
 def dummy_function1():
     pass
 
