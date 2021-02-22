@@ -68,6 +68,18 @@ def compute_equal_width_cutoffs(values, num_bins):
     cutoffs = [round(cutoff, 2) for cutoff in cutoffs]
     return cutoffs 
 
+def compute_bin_frequencies(values, cutoffs):
+    freqs = [0 for _ in range(len(cutoffs) - 1)]
+
+    for val in values:
+        if val == max(values):
+            freqs[-1] += 1
+        else:
+            for i in range(len(cutoffs) - 1):
+                if cutoffs[i] <= val < cutoffs[i + 1]:
+                    freqs[i] += 1
+
+    return freqs
 
 def dummy_function1():
     pass
