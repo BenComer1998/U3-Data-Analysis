@@ -81,6 +81,15 @@ def compute_bin_frequencies(values, cutoffs):
 
     return freqs
 
+def compute_slope_intercept(x, y):
+    mean_x = np.mean(x)
+    mean_y = np.mean(y) 
+    m = sum([(x[i] - mean_x) * (y[i] - mean_y) for i in range(len(x))]) \
+        / sum([(x[i] - mean_x) ** 2 for i in range(len(x))])
+    # y = mx + b => y - mx
+    b = mean_y - m * mean_x
+    return m, b 
+
 def dummy_function1():
     pass
 
